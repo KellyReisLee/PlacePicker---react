@@ -20,6 +20,7 @@ function App() {
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
+  console.log(pickedPlaces);
 
 
 
@@ -31,16 +32,6 @@ function App() {
     })
   }, []);
 
-
-
-  function handleStartRemovePlace(id) {
-    setModalIsOpen(true);
-    selectedPlace.current = id;
-  }
-
-  function handleStopRemovePlace() {
-    setModalIsOpen(false)
-  }
 
   function handleSelectPlace(id) {
 
@@ -55,6 +46,7 @@ function App() {
     });
 
 
+
     // You are not allowed to use Hooks nested inside functions!!
     const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
     if (storedIds.indexOf(id) === -1) {
@@ -62,6 +54,17 @@ function App() {
     }
 
   }
+
+
+  function handleStartRemovePlace(id) {
+    setModalIsOpen(true);
+    selectedPlace.current = id;
+  }
+
+  function handleStopRemovePlace() {
+    setModalIsOpen(false)
+  }
+
 
   const handleRemovePlace = useCallback(
     function handleRemovePlace() {
@@ -77,12 +80,10 @@ function App() {
   return (
     <>
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
-
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
         />
-
       </Modal>
 
       <header>
